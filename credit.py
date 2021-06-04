@@ -1,5 +1,3 @@
-from cs50 import get_string
-
 def luhns_algorithm(number):
 
     products = []
@@ -17,7 +15,7 @@ def luhns_algorithm(number):
             total = total + values
 
     i = len(number) - 1 #add digits which were not multiplied by 2
-    while i > 0:
+    while i >= 0:
         total = total + int(number[i])
         i -= 2
 
@@ -27,7 +25,7 @@ def card(number):
 
     if len(number) == 15:
         if number[:2] == '34' or number[:2] == '37':
-            return "American Express"
+            return "AMEX"
         else:
             return "INVALID"
     elif len(number) == 13:
@@ -37,7 +35,7 @@ def card(number):
             return "INVALID"
     elif len(number) == 16:
         if number[:2] == '51' or number[:2] == '52' or number[:2] == '53' or number[:2] == '54' or number[:2] == '55':
-            return "Mastercard"
+            return "MASTERCARD"
         elif number[:1] == '4':
             return "VISA"
         else:
@@ -45,13 +43,12 @@ def card(number):
 
 def main():
 
-    number = get_string("Number: ")
+    number = input("Number: ")
 
-    print(luhns_algorithm(number))
-    #if luhns_algorithm(number) % 10 != 0:
-        #print("INVALID")
-    #else:
-        #card(number)
+    if luhns_algorithm(number) % 10 != 0:
+        print("INVALID")
+    else:
+        print(card(number))
 
 
 main()
