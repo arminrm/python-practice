@@ -1,5 +1,23 @@
+import arcade
+
+SCREEN_HEIGHT = 800
+SCREEN_WIDTH = 800
+SCREEN_TITLE = "Starting Template"
+
+class MyGame(arcade.Window):
+
+    def __init__(self, width, height, title):
+        super().__init__(width, height, title)
+
+        # If you have sprite lists, you should create them here,
+         # and set them to None
+
+    def setup(self):
+       #""" Set up the game variables. Call to re-start the game. """
+       # Create your sprites and sprite lists here
+        #pass
+
     def on_draw(self):
-        arcade.open_window(WIDTH, HEIGHT,"chess")
         arcade.set_background_color(arcade.csscolor.SKY_BLUE)
         arcade.start_render()
         z = 0
@@ -37,6 +55,42 @@
                     arcade.draw_text("King", x - z + 50, y + 50, arcade.color.BLUE)
                 elif y == 600:
                     arcade.draw_text("Pawn", x - z + 50, y + 50, arcade.color.BLUE)
-
                 z += 100
         arcade.finish_render()
+
+       # This command should happen before we start drawing. It will clear
+       # the screen to the background color, and erase what we drew last frame.
+       
+       
+
+        # Call draw() on all your sprite lists below
+
+     #def on_update(self, delta_time):
+
+        #pass
+
+    #def on_key_press(self, key, key_modifiers):
+        
+        #pass
+
+    #def on_key_release(self, key, key_modifiers):
+
+        #pass
+
+    #def on_mouse_motion(self, x, y, delta_x, delta_y):
+
+        #pass
+
+    #def on_mouse_press(self, x, y, button, key_modifiers):
+
+        #pass
+
+    #def on_mouse_release(self, x, y, button, key_modifiers):
+
+        #pass
+
+def main():
+    """ Main method """
+    game = MyGame(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+    game.setup()
+    arcade.run()
