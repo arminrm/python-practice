@@ -17,7 +17,8 @@ class MyGame(arcade.Window):
        # Create your sprites and sprite lists here
         #pass
 
-    def on_draw(self):
+    def on_draw():
+
         arcade.set_background_color(arcade.csscolor.SKY_BLUE)
         arcade.start_render()
         z = 0
@@ -57,13 +58,7 @@ class MyGame(arcade.Window):
                     arcade.draw_text("Pawn", x - z + 50, y + 50, arcade.color.BLUE)
                 z += 100
         arcade.finish_render()
-
-       # This command should happen before we start drawing. It will clear
-       # the screen to the background color, and erase what we drew last frame.
-       
-       
-
-        # Call draw() on all your sprite lists below
+        pass
 
      #def on_update(self, delta_time):
 
@@ -94,3 +89,6 @@ def main():
     game = MyGame(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
     game.setup()
     arcade.run()
+
+if __name__ == "__main__":
+    main()
