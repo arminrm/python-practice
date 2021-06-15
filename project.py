@@ -4,9 +4,8 @@ import arcade
 HEIGHT = 800
 WIDTH = 800
 
-pieces = ["Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook"]
-white_pieces = []
-black_pieces = []
+names = ["Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook"]
+pieces = []
 
 class chess_piece():
 
@@ -17,12 +16,14 @@ class chess_piece():
         self.y = y
     
     @classmethod
-    def pieces(cls):
-        for x, name in enumerate(pieces):
-            white_pieces.append(chess_piece (name, "White", (100 * x) + 50, 50))
-            black_pieces.append(chess_piece (name, "Black", (100 * x) + 50, 750))
+    def make_pieces(cls):
+        for x, name in enumerate(names):
+            pieces.append(chess_piece (name, "WHITE", (100 * x) + 50, 50))
+            pieces.append(chess_piece (name, "BLACK", (100 * x) + 50, 750))
+            pieces.append(chess_piece ("Pawn", "WHITE", (100 * x) + 50, 150))
+            pieces.append(chess_piece ("Pawn", "BLACK", (100 * x) + 50, 650))
         
-chess_piece.pieces()
+chess_piece.make_pieces()
 
 arcade.open_window(WIDTH, HEIGHT,"chess")
 arcade.start_render()
@@ -38,9 +39,11 @@ for y in range(0, 701, 100):
     z += 100
 
 #print pieces
-for i in range(8):
-    arcade.draw_text(white_pieces[i].piece, white_pieces[i].x, white_pieces[i].y, arcade.color.RED)
-    arcade.draw_text(black_pieces[i].piece, black_pieces[i].x, black_pieces[i].y, arcade.color.BLUE)
+for i in range(32):
+    if pieces[i].colour == 'WHITE':
+        arcade.draw_text(pieces[i].piece, pieces[i].x, pieces[i].y, arcade.color.BLUE)
+    elif pieces[i].colour == 'BLACK':
+        arcade.draw_text(pieces[i].piece, pieces[i].x, pieces[i].y, arcade.color.RED)
 
 arcade.finish_render()
 arcade.run()
