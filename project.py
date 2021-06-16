@@ -7,6 +7,14 @@ SCREEN_TITLE = "Starting Template"
 names = ["Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook"]
 pieces = []
 
+valid_choice = False  
+index = 0 #Could I make this better
+
+motion_x = None
+motion_y = None
+
+turn = "WHITE" #Do I have to define variable up here?
+
 class chess_piece():
 
     def __init__(self, piece, colour, x, y):
@@ -32,7 +40,7 @@ class MyGame(arcade.Window):
         # and set them to None
 
     def setup(self):
-        
+
         chess_piece.make_pieces()
 
     def on_draw(self):
@@ -55,11 +63,7 @@ class MyGame(arcade.Window):
             elif piece.colour == 'BLACK':
                 arcade.draw_text(piece.piece, piece.x, piece.y, arcade.color.RED)
 
-        arcade.finish_render()
-
     #def on_update(self, delta_time):
-
-        #pass
 
     #def on_key_press(self, key, key_modifiers):
         
@@ -67,19 +71,53 @@ class MyGame(arcade.Window):
 
     #def on_key_release(self, key, key_modifiers):
 
-        #pass
 
-    #def on_mouse_motion(self, x, y, delta_x, delta_y):
+    def on_mouse_motion(self, x, y, delta_x, delta_y):
 
-        #pass
+        global pieces, index, motion_x, motion_y
 
-    #def on_mouse_press(self, x, y, button, key_modifiers):
+        if valid_choice == True:
+            motion_x = x
+            motion_y = y
 
-        #pass
+            pieces[index].x = motion_x
+            pieces[index].y = motion_y
 
-    #def on_mouse_release(self, x, y, button, key_modifiers):
+    def on_mouse_press(self, x, y, button, key_modifiers):
 
-        #pass
+        global valid_choice, index
+
+        for i, piece in enumerate(pieces):
+            if x in range(piece.x - 50, piece.x + 50) and y in range(piece.y - 50, piece.y + 50):
+                if piece.colour == turn:
+                    valid_choice = True
+                    index = i
+
+            
+    def on_mouse_release(self, x, y, button, key_modifiers):
+        
+        global pieces, index, motion_x, motion_y, valid_choice, turn
+
+        motion_x = None
+        motion_y = None
+
+        if valid_choice == True:
+            if (x - (x % 50)) % 100 == 0:
+                pieces[index].x = x - (x % 50) + 50
+            else:
+                pieces[index].x = x - (x % 50)
+
+            if (y - (y % 50)) % 100 == 0:
+                pieces[index].y = y - (y % 50) + 50
+            else:
+                pieces[index].y = y - (y % 50)
+
+            if turn == "WHITE":
+                turn = "BLACK"
+            else:
+                turn = "WHITE"
+        
+        valid_choice = False
 
 def main():
     """ Main method """
