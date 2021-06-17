@@ -48,8 +48,6 @@ def mouse_release(i, value):
                 pieces[index].y = orignal_position[i]
             return False
 
-    print(pieces[index].x, pieces[index].y)
-
 class chess_piece():
 
     def __init__(self, piece, colour, x, y):
