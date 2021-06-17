@@ -8,9 +8,9 @@ names = ["Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook"
 pieces = []
 
 valid_choice = False  
-index = 0 #Could I make this better
+index = 0 
 
-turn = "WHITE" #Do I have to define variable up here?
+turn = "WHITE"
 changed_position = False
 
 orignal_position = []
