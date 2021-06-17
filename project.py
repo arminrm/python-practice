@@ -10,10 +10,45 @@ pieces = []
 valid_choice = False  
 index = 0 #Could I make this better
 
-motion_x = None
-motion_y = None
-
 turn = "WHITE" #Do I have to define variable up here?
+changed_position = False
+
+orignal_position = []
+release_x = None
+release_y = None
+
+def mouse_release(i, value):
+
+    global orignal_position
+
+    if (value - (value % 50)) % 100 == 0:
+        if orignal_position[i] != value - (value % 50) + 50:
+            if i == 0:
+                pieces[index].x = value - (value % 50) + 50
+            elif i == 1:
+                pieces[index].y = value - (value % 50) + 50
+            return True
+        else:
+            if i == 0:
+                pieces[index].x = orignal_position[i]
+            elif i == 1:
+                pieces[index].y = orignal_position[i]
+            return False
+    elif (value - (value % 50)) % 100 != 0:
+        if orignal_position[i] != value - (value % 50):
+            if i == 0:
+                pieces[index].x = value - (value % 50) 
+            elif i == 1:
+                pieces[index].y = value - (value % 50)
+            return True
+        else:
+            if i == 0:
+                pieces[index].x = orignal_position[i]
+            elif i == 1:
+                pieces[index].y = orignal_position[i]
+            return False
+
+    print(pieces[index].x, pieces[index].y)
 
 class chess_piece():
 
@@ -74,49 +109,38 @@ class MyGame(arcade.Window):
 
     def on_mouse_motion(self, x, y, delta_x, delta_y):
 
-        global pieces, index, motion_x, motion_y
+        global pieces, index
 
         if valid_choice == True:
-            motion_x = x
-            motion_y = y
-
-            pieces[index].x = motion_x
-            pieces[index].y = motion_y
+            pieces[index].x = x
+            pieces[index].y = y
 
     def on_mouse_press(self, x, y, button, key_modifiers):
 
-        global valid_choice, index
+        global valid_choice, index, orignal_position
+
+        orignal_position = []
 
         for i, piece in enumerate(pieces):
             if x in range(piece.x - 50, piece.x + 50) and y in range(piece.y - 50, piece.y + 50):
                 if piece.colour == turn:
+                    orignal_position = [piece.x, piece.y]
                     valid_choice = True
                     index = i
-
             
     def on_mouse_release(self, x, y, button, key_modifiers):
         
-        global pieces, index, motion_x, motion_y, valid_choice, turn
-
-        motion_x = None
-        motion_y = None
+        global pieces, index, valid_choice, turn, changed_position, release_x, release_y
 
         if valid_choice == True:
-            if (x - (x % 50)) % 100 == 0:
-                pieces[index].x = x - (x % 50) + 50
-            else:
-                pieces[index].x = x - (x % 50)
-
-            if (y - (y % 50)) % 100 == 0:
-                pieces[index].y = y - (y % 50) + 50
-            else:
-                pieces[index].y = y - (y % 50)
-
-            if turn == "WHITE":
-                turn = "BLACK"
-            else:
-                turn = "WHITE"
-        
+            release_x = mouse_release(0, x)
+            release_y = mouse_release(1, y)
+            if release_x or release_y is True:
+                if turn == "WHITE":
+                    turn = "BLACK"
+                else:
+                    turn = "WHITE"
+    
         valid_choice = False
 
 def main():
