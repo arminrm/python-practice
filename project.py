@@ -8,7 +8,7 @@ names = ["Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook"
 pieces = []
 
 valid_choice = False  
-index = 0 
+index = None
 
 turn = "WHITE"
 changed_position = False
