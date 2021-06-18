@@ -5,24 +5,38 @@ SCREEN_WIDTH = 800
 SCREEN_TITLE = "Starting Template"
 
 names = ["Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook"]
-pieces = []
+pieces = []  #include in class
 
 valid_choice = False  
 index = None
 
 turn = "WHITE"
-changed_position = False
 
-orignal_position = []
+original_position = []  #include in class
 release_x = None
 release_y = None
 
+def valid_move():
+
+    global pieces, index, original_position
+
+    if pieces[index].piece == "Rook":
+        if pieces[index].x == original_position[0]:
+            return True
+        elif pieces[index].y == original_position[1]:
+            return True
+        else:
+            pieces[index].x = original_position[0]
+            pieces[index].y = original_position[1]
+            return False
+    return True
+
 def mouse_release(i, value):
 
-    global orignal_position
+    global original_position, index
 
     if (value - (value % 50)) % 100 == 0:
-        if orignal_position[i] != value - (value % 50) + 50:
+        if original_position[i] != value - (value % 50) + 50:
             if i == 0:
                 pieces[index].x = value - (value % 50) + 50
             elif i == 1:
@@ -30,12 +44,12 @@ def mouse_release(i, value):
             return True
         else:
             if i == 0:
-                pieces[index].x = orignal_position[i]
+                pieces[index].x = original_position[i]
             elif i == 1:
-                pieces[index].y = orignal_position[i]
+                pieces[index].y = original_position[i]
             return False
     elif (value - (value % 50)) % 100 != 0:
-        if orignal_position[i] != value - (value % 50):
+        if original_position[i] != value - (value % 50):
             if i == 0:
                 pieces[index].x = value - (value % 50) 
             elif i == 1:
@@ -43,9 +57,9 @@ def mouse_release(i, value):
             return True
         else:
             if i == 0:
-                pieces[index].x = orignal_position[i]
+                pieces[index].x = original_position[i]
             elif i == 1:
-                pieces[index].y = orignal_position[i]
+                pieces[index].y = original_position[i]
             return False
 
 class chess_piece():
@@ -115,25 +129,25 @@ class MyGame(arcade.Window):
 
     def on_mouse_press(self, x, y, button, key_modifiers):
 
-        global valid_choice, index, orignal_position
+        global valid_choice, index, original_position
 
-        orignal_position = []
+        original_position = []
 
         for i, piece in enumerate(pieces):
             if x in range(piece.x - 50, piece.x + 50) and y in range(piece.y - 50, piece.y + 50):
                 if piece.colour == turn:
-                    orignal_position = [piece.x, piece.y]
+                    original_position = [piece.x, piece.y]
                     valid_choice = True
                     index = i
             
     def on_mouse_release(self, x, y, button, key_modifiers):
         
-        global pieces, index, valid_choice, turn, changed_position, release_x, release_y
+        global pieces, index, valid_choice, turn, release_x, release_y
 
         if valid_choice == True:
             release_x = mouse_release(0, x)
             release_y = mouse_release(1, y)
-            if release_x or release_y is True:
+            if (release_x or release_y) and valid_move() is True:
                 if turn == "WHITE":
                     turn = "BLACK"
                 else:
