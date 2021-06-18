@@ -16,7 +16,7 @@ original_position = []  #include in class
 release_x = None
 release_y = None
 
-def collision_detection(p):
+def collision_detection():
     
     for i, piece in enumerate(pieces):       #potential bug
         if i != index and piece.x == pieces[index].x and piece.y == pieces[index].y:
