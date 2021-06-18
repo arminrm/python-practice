@@ -5,7 +5,7 @@ SCREEN_WIDTH = 800
 SCREEN_TITLE = "Starting Template"
 
 names = ["Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook"]
-pieces = []  #include in class
+pieces = []
 
 valid_choice = False  
 index = None
@@ -16,22 +16,35 @@ original_position = []  #include in class
 release_x = None
 release_y = None
 
+def collision_detection(p):
+    
+    for i, piece in enumerate(pieces):       #potential bug
+        if i != index and piece.x == pieces[index].x and piece.y == pieces[index].y:
+            if piece.colour == pieces[index].colour or piece.piece == "King":
+                pieces[index].x = original_position[0]
+                pieces[index].y = original_position[1]
+                return False
+            else:
+                pieces.pop(i)
+                return True
+    return True
+
 def valid_move():
 
     global pieces, index, original_position
-
+    #loop through direction that piece has moved.
     if pieces[index].piece == "Rook":
         if pieces[index].x == original_position[0]:
-            return True
+            return collision_detection()
         elif pieces[index].y == original_position[1]:
-            return True
+            return collision_detection()
         else:
             pieces[index].x = original_position[0]
             pieces[index].y = original_position[1]
             return False
     return True
 
-def mouse_release(i, value):
+def mouse_release(i, value): #the main purpose is to centre; also detects position change 
 
     global original_position, index
 
@@ -44,7 +57,7 @@ def mouse_release(i, value):
             return True
         else:
             if i == 0:
-                pieces[index].x = original_position[i]
+                pieces[index].x = original_position[i] 
             elif i == 1:
                 pieces[index].y = original_position[i]
             return False
