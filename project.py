@@ -1,11 +1,12 @@
 import arcade
+#maybe file for functions....
 
 SCREEN_HEIGHT = 800
 SCREEN_WIDTH = 800
 SCREEN_TITLE = "Starting Template"
 
 names = ["Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook"]
-pieces = []
+pieces = [] #include class
 
 valid_choice = False  
 index = None
@@ -75,7 +76,7 @@ def mouse_release(i, value): #the main purpose is to centre; also detects positi
                 pieces[index].y = original_position[i]
             return False
 
-class chess_piece():
+class chess_piece():   #camel-case, capitalized
 
     def __init__(self, piece, colour, x, y):
         self.piece = piece
